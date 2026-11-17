@@ -18,7 +18,7 @@ runs:
         echo "Install Hadolint"
         sudo curl -L  https://github.com/hadolint/hadolint/releases/latest/download/hadolint-$(uname -s)-$(uname -m) \
                   -o /usr/local/bin/hadolint && \
-        chmod +x /usr/local/bin/hadolint
+        sudo chmod +x /usr/local/bin/hadolint
 
         # Install Trivy
         echo "Install Trivy"
