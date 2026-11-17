@@ -1,0 +1,41 @@
+name: Check Lint and Scan Docker/Terraform Vulnerabilities
+
+runs:
+  using: composite
+  steps: 
+
+    - name: Install Dependencies
+      shell: bash
+      run: |
+        set -euo pipefail
+        sudo apt install  update -y && \
+        sudo apt install curl jq wget gnupg -y
+    
+    - name: Install Apps for Scan
+      shell: bash
+      run: |
+        # Install Hadolint
+        sudo curl -L  https://github.com/hadolint/hadolint/releases/latest/download/hadolint-$(uname -s)-$(uname -m) \
+                  -o /usr/local/bin/hadolint && \
+        chmod +x /usr/local/bin/hadolint
+
+        # Install Trivy
+        wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor | sudo tee /usr/share/keyrings/trivy.gpg > /dev/null
+        echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
+        sudo apt-get update
+
+        # Install Terrascan
+          curl -L "$(curl -s https://api.github.com/repos/tenable/terrascan/releases/latest | grep -o -E "https://.+?_$(uname -s)_$(uname -m).tar.gz")" > terrascan.tar.gz
+          tar -xf terrascan.tar.gz terrascan && rm terrascan.tar.gz
+          sudo install terrascan /usr/local/bin && rm terrascan
+          terrascan
+
+    - name: Scan Docker
+      shell: bash
+      run: |
+        echo "Scan Docker"
+
+    - name: Scan Terraform 
+      shell: bash
+      run: |
+        echo "Scan Terraform"
