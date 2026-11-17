@@ -15,20 +15,24 @@ runs:
       shell: bash
       run: |
         # Install Hadolint
+        echo "Install Hadolint"
         sudo curl -L  https://github.com/hadolint/hadolint/releases/latest/download/hadolint-$(uname -s)-$(uname -m) \
                   -o /usr/local/bin/hadolint && \
         chmod +x /usr/local/bin/hadolint
 
         # Install Trivy
+        echo "Install Trivy"
         wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor | sudo tee /usr/share/keyrings/trivy.gpg > /dev/null
         echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
-        sudo apt-get update
+        sudo apt update
+        sudo apt install trivy
 
         # Install Terrascan
-          curl -L "$(curl -s https://api.github.com/repos/tenable/terrascan/releases/latest | grep -o -E "https://.+?_$(uname -s)_$(uname -m).tar.gz")" > terrascan.tar.gz
-          tar -xf terrascan.tar.gz terrascan && rm terrascan.tar.gz
-          sudo install terrascan /usr/local/bin && rm terrascan
-          terrascan
+        echo "install Terrascan"
+        curl -L "$(curl -s https://api.github.com/repos/tenable/terrascan/releases/latest | grep -o -E "https://.+?_$(uname -s)_$(uname -m).tar.gz")" > terrascan.tar.gz
+        tar -xf terrascan.tar.gz terrascan && rm terrascan.tar.gz
+        sudo install terrascan /usr/local/bin && rm terrascan
+        terrascan
 
     - name: Scan Docker
       shell: bash
