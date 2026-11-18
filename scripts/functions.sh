@@ -21,7 +21,7 @@ ensure_label(){
 
 # Marca problema existente para issue já aberta
 mark_problem(){
-    touch "$GITHUB_WORKSPACE/problems_found.flag"
+    touch "$GITHUB_WORKSPACE/issues_found.flag"
 }
 
 # Cria as issues
@@ -32,7 +32,7 @@ create_issue(){
     '{title:$t,body:$b,labels:$lbls}' \
     | curl -s -X POST -H "$AUTH" -H "Content-Type: aplication/json" \
             -d @- "${API_ROOT}/issues" >/dev/null
-    touch "$GITHUB_WORKSPACE/issues_found.flag"
+    mark_problem
 }
 
 # Se o problema ainda existe, reabre a issue
