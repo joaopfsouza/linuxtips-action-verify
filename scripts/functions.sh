@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO="${{ GITHUB_REPOSITORY }}"
+REPO="${GITHUB_REPOSITORY}"
 API_ROOT="https://pi.github.com/repos/${REPO}"
 AUTH="Authorization: Bearer ${GITHUB_TOKEN}"
 
