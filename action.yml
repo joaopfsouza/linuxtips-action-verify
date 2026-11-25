@@ -1,5 +1,11 @@
 name: Check Lint and Scan Docker/Terraform Vulnerabilities
 
+inputs:
+  docker-context:
+    default: '.'
+    required: false
+    description: 'Diretório onde está o Dockerfile dentro do repo'
+
 runs:
   using: composite
   steps: 
