@@ -43,7 +43,7 @@ jobs:
   call-scan:
     runs-on: ubuntu-latest
     steps:
-      - uses: FabioBartoli/linuxtips-action-verify@v1.0.0
+      - uses: joaopfsouza/linuxtips-action-verify@v1.0.0
         with: 
           docker-context: ${{ github.event.inputs.docker-context }}
 ```
