@@ -6,7 +6,7 @@ API_ROOT="https://pi.github.com/repos/${REPO}"
 AUTH="Authorization: Bearer ${GITHUB_TOKEN}"
 
 
- Validar se a label já existe
+# Validar se a label já existe
 
 ensure_label(){
     local label="$1" color="$2"
